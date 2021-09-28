@@ -44,7 +44,7 @@ function build() {
             "./app/*.html",
         ],
         { base: "app" }
-    ).pipe(dest("./dist"));
+    ).pipe(dest("./disten"));
 }
 
 function watching() {
