@@ -3,6 +3,7 @@ const scss = require("gulp-sass")(require("sass"));
 const concat = require("gulp-concat");
 const browserSync = require("browser-sync").create();
 const uglify = require("gulp-uglify-es").default;
+const autoprefixer = require("gulp-autoprefixer");
 
 function browsersynk() {
     browserSync.init({
@@ -24,8 +25,26 @@ function styles() {
     return src("./app/scss/style.scss")
         .pipe(scss({ outputStyle: "compressed" }))
         .pipe(concat("style.min.css"))
+        .pipe(
+            autoprefixer({
+                overrideBrowserslist: ["last 10 version"],
+                grid: true,
+            })
+        )
         .pipe(dest("app/css"))
         .pipe(browserSync.stream());
+}
+
+function build() {
+    return src(
+        [
+            "./app/css/style.min.css",
+            "./app/fonts/**/*",
+            "./app/js/main.min.js",
+            "./app/*.html",
+        ],
+        { base: "app" }
+    ).pipe(dest("./dist"));
 }
 
 function watching() {
@@ -38,4 +57,5 @@ exports.styles = styles;
 exports.watching = watching;
 exports.browsersynk = browsersynk;
 exports.scripts = scripts;
+exports.build = build;
 exports.default = parallel(scripts, browsersynk, watching);
