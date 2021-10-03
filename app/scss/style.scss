@@ -1,5 +1,7 @@
-body {
-    background-color: black;
-    color: white;
-    display: flex;
-}
+@import 'vars';
+@import 'fonts';
+@import 'reset';
+@import 'libs';
+@import 'global';
+
+
